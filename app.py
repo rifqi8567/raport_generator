@@ -872,6 +872,11 @@ def create_score_page(c, width, height, row, nilai_df, wali_kelas_map, school_le
                 # Draw MATA PELAJARAN (Indo kiri – Arab kanan)
                 text_top_y = current_y + row_height - 15
                 
+                # --- Garis pemisah vertikal antara Indo & Arab ---
+                separator_x = table_x + col_no_width + (col_mapel_width / 2)
+                c.setLineWidth(0.5)
+                c.line(separator_x, current_y, separator_x, current_y + row_height)
+                
                 # Indo (Wrapped)
                 draw_wrapped_text(c, mapel, table_x + col_no_width + 5, text_top_y, mapel_max_width, line_height=14, font="Times-Roman", size=11)
 
@@ -1105,7 +1110,7 @@ def create_kompetensi_page(
 
         # === Header text ===
         header_y = height - 40
-        c.setFont("Times-Bold", 15)
+        c.setFont("Times-Bold", 13)
         c.setFillColor(colors.black)
         c.drawCentredString(
             center_x, header_y, "LAPORAN PENILAIAN SUMATIF AKHIR SEMESTER I (PSAS I)"
@@ -1114,17 +1119,17 @@ def create_kompetensi_page(
         prefix = f"{school_level} PESANTREN "
         middle = "RABBAANII"
 
-        prefix_width = c.stringWidth(prefix, "Times-Bold", 15)
-        middle_width = c.stringWidth(middle, "Calligrapher", 19)
+        prefix_width = c.stringWidth(prefix, "Times-Bold", 13)
+        middle_width = c.stringWidth(middle, "Calligrapher", 15)
         start_x = center_x - (prefix_width + middle_width) / 2
         y_pos = header_y - 18
 
-        c.setFont("Times-Bold", 15)
+        c.setFont("Times-Bold", 13)
         c.drawString(start_x, y_pos, prefix)
-        c.setFont("Calligrapher", 19)
+        c.setFont("Calligrapher", 15)
         c.drawString(start_x + prefix_width, y_pos, middle)
 
-        c.setFont("Times-Bold", 15)
+        c.setFont("Times-Bold", 13)
         c.drawCentredString(center_x, header_y - 36, "TAHUN PELAJARAN 2025/2026")
         c.drawCentredString(center_x, header_y - 54, "KECAMATAN CIKARANG TIMUR")
 
@@ -1438,22 +1443,22 @@ def create_tahsin_tahfidz_page(
 
         # === Header text ===
         header_y = height - 40
-        c.setFont("Times-Bold", 15)
+        c.setFont("Times-Bold", 13)
         c.drawCentredString(
             center_x, header_y, "LAPORAN PENILAIAN SUMATIF AKHIR SEMESTER I (PSAS I)"
             
         )
         prefix = school_header.replace("RABBAANII", "").strip() + " "
         middle = "RABBAANII"
-        prefix_width = c.stringWidth(prefix, "Times-Bold", 15)
-        middle_width = c.stringWidth(middle, "Calligrapher", 19)
+        prefix_width = c.stringWidth(prefix, "Times-Bold", 13)
+        middle_width = c.stringWidth(middle, "Calligrapher", 15)
         start_x = center_x - (prefix_width + middle_width) / 2
         y_pos = header_y - 18
-        c.setFont("Times-Bold", 15)
+        c.setFont("Times-Bold", 13)
         c.drawString(start_x, y_pos, prefix)
-        c.setFont("Calligrapher", 19)
+        c.setFont("Calligrapher", 15)
         c.drawString(start_x + prefix_width, y_pos, middle)
-        c.setFont("Times-Bold", 15)
+        c.setFont("Times-Bold", 13)
         c.drawCentredString(center_x, header_y - 36, "TAHSIN DAN TAHFIDZ")
         c.drawCentredString(center_x, header_y - 54, "TAHUN PELAJARAN 2025/2026")
 
@@ -1801,7 +1806,7 @@ def create_karakter_page(c, width, height, row, karakter_df=None, wali_kelas_map
         # === Header text ===
         header_y = height - 40
         line_gap = 18
-        c.setFont("Times-Bold", 15)
+        c.setFont("Times-Bold", 13)
         c.setFillColor(colors.black)
         c.drawCentredString(
             center_x, header_y, "LAPORAN PENILAIAN SUMATIF AKHIR SEMESTER I (PSAS I)"
@@ -1811,20 +1816,20 @@ def create_karakter_page(c, width, height, row, karakter_df=None, wali_kelas_map
         prefix = f"{row.get('Kelas', '')} PESANTREN "
         middle = "RABBAANII"
 
-        prefix_width = c.stringWidth(prefix, "Times-Bold", 15)
-        middle_width = c.stringWidth(middle, "Calligrapher", 19)
+        prefix_width = c.stringWidth(prefix, "Times-Bold", 13)
+        middle_width = c.stringWidth(middle, "Calligrapher", 15)
         total_width = prefix_width + middle_width
         start_x = center_x - (total_width / 2)
         y_pos = header_y - line_gap
 
-        c.setFont("Times-Bold", 15)
+        c.setFont("Times-Bold", 13)
         c.drawString(start_x, y_pos, prefix)
 
-        c.setFont("Calligrapher", 19)
+        c.setFont("Calligrapher", 15)
         c.drawString(start_x + prefix_width, y_pos, middle)
 
         # Baris 3 & 4
-        c.setFont("Times-Bold", 15)
+        c.setFont("Times-Bold", 13)
         c.drawCentredString(
             center_x, header_y - 2 * line_gap, "TAHUN PELAJARAN 2025/2026"
         )
