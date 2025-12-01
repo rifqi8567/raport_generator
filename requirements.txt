@@ -1,0 +1,5 @@
+Flask
+pandas
+reportlab
+num2words
+openpyxl

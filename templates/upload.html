@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raport Generator - Rabbaanii Islamic School</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --primary-light: #dbeafe;
+        --secondary: #059669;
+        --secondary-light: #d1fae5;
+        --accent: #7c3aed;
+        --accent-light: #ede9fe;
+        --warning: #d97706;
+        --warning-light: #fef3c7;
+        --error: #dc2626;
+        --error-light: #fee2e2;
+        --success: #059669;
+        --success-light: #d1fae5;
+        --gray-50: #f9fafb;
+        --gray-100: #f3f4f6;
+        --gray-200: #e5e7eb;
+        --gray-300: #d1d5db;
+        --gray-400: #9ca3af;
+        --gray-500: #6b7280;
+        --gray-600: #4b5563;
+        --gray-700: #374151;
+        --gray-800: #1f2937;
+        --gray-900: #111827;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+          0 4px 6px -4px rgb(0 0 0 / 0.1);
+        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+          0 8px 10px -6px rgb(0 0 0 / 0.1);
+        --border-radius: 12px;
+        --border-radius-lg: 16px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        min-height: 100vh;
+        padding: 2rem 1rem;
+        line-height: 1.6;
+        color: var(--gray-800);
+      }
+
+      .container {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-xl);
+        padding: 3rem;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        border: 1px solid var(--gray-200);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary) 0%,
+          var(--secondary) 50%,
+          var(--accent) 100%
+        );
+      }
+
+      /* Header Section */
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid var(--gray-100);
+      }
+
+      .header-logo {
+        width: 80px;
+        height: 80px;
+        background: var(--primary);
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .header h1 {
+        color: var(--gray-900);
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.025em;
+      }
+
+      .header p {
+        color: var(--gray-600);
+        font-size: 1.125rem;
+        font-weight: 500;
+      }
+
+      .header-subtitle {
+        background: var(--primary-light);
+        color: var(--primary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-top: 1rem;
+        display: inline-block;
+      }
+
+      /* Status Display */
+      .status {
+        padding: 1rem 1.5rem;
+        border-radius: var(--border-radius);
+        margin-bottom: 2rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        animation: slideIn 0.3s ease-out;
+        border: 1px solid;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .status.success {
+        background: var(--success-light);
+        color: var(--success);
+        border-color: var(--success);
+      }
+
+      .status.error {
+        background: var(--error-light);
+        color: var(--error);
+        border-color: var(--error);
+      }
+
+      .status.info {
+        background: var(--primary-light);
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      /* Upload Sections */
+      .upload-grid {
+        display: grid;
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .upload-section {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        border: 2px solid var(--gray-200);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .upload-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gray-300);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: var(--transition);
+      }
+
+      .upload-section:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .upload-section:hover::before {
+        transform: scaleX(1);
+      }
+
+      .upload-section.biodata-section::before {
+        background: linear-gradient(
+          90deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+      }
+
+      .upload-section.nilai-section::before {
+        background: linear-gradient(90deg, var(--secondary) 0%, #047857 100%);
+      }
+
+      .upload-section.kompetensi-section {
+        border-color: var(--warning);
+      }
+
+      .upload-section.kompetensi-section::before {
+        background: linear-gradient(90deg, var(--warning) 0%, #b45309 100%);
+      }
+
+      .upload-section.tahsin-section {
+        border-color: var(--secondary);
+      }
+
+      .upload-section.tahsin-section::before {
+        background: linear-gradient(90deg, var(--secondary) 0%, #047857 100%);
+      }
+
+      .upload-section.karakter-section {
+        border-color: var(--accent);
+      }
+
+      .upload-section.karakter-section::before {
+        background: linear-gradient(90deg, var(--accent) 0%, #6d28d9 100%);
+      }
+
+      .upload-section h3 {
+        color: var(--gray-900);
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .upload-section p {
+        color: var(--gray-600);
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .class-filter {
+        background: var(--warning-light);
+        color: var(--warning);
+        padding: 0.75rem 1rem;
+        border-radius: var(--border-radius);
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(217, 119, 6, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .class-filter.smp-filter {
+        background: var(--secondary-light);
+        color: var(--secondary);
+        border: 1px solid rgba(5, 150, 105, 0.3);
+      }
+
+      .class-filter.karakter-filter {
+        background: var(--accent-light);
+        color: var(--accent);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+      }
+
+      /* Form Elements */
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 1rem;
+        align-items: end;
+      }
+
+      .file-input,
+      .class-select {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid var(--gray-300);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: var(--transition);
+        background: white;
+        font-family: inherit;
+      }
+
+      .file-input:focus,
+      .class-select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      /* Buttons */
+      .btn {
+        padding: 0.875rem 1.5rem;
+        border: none;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-width: 140px;
+        font-family: inherit;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: var(--transition);
+      }
+
+      .btn:hover::before {
+        left: 100%;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .btn-secondary {
+        background: var(--secondary);
+        color: white;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #047857;
+        transform: translateY(-1px);
+      }
+
+      .btn-template {
+        background: var(--warning);
+        color: white;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+
+      .btn-template:hover:not(:disabled) {
+        background: #b45309;
+      }
+
+      .btn:disabled {
+        background: var(--gray-400) !important;
+        cursor: not-allowed;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      .generate-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--accent) 100%
+        );
+        color: white;
+        padding: 1.5rem 2rem;
+        font-size: 1.125rem;
+        font-weight: 700;
+        width: 100%;
+        margin-top: 2rem;
+        border-radius: var(--border-radius);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .generate-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark) 0%,
+          #6d28d9 100%
+        );
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .generate-btn:hover:not(:disabled)::before {
+        opacity: 1;
+      }
+
+      .generate-btn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .generate-btn span {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Progress Bar */
+      .progress-container {
+        width: 100%;
+        height: 12px;
+        background: var(--gray-200);
+        border-radius: 6px;
+        overflow: hidden;
+        margin: 2rem 0;
+        display: none;
+        position: relative;
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary) 0%,
+          var(--secondary) 50%,
+          var(--accent) 100%
+        );
+        width: 0%;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(
+          to right,
+          transparent 0%,
+          rgba(255, 255, 255, 0.6) 50%,
+          transparent 100%
+        );
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      /* Grid Layouts */
+      .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      /* Success Indicators */
+      .upload-section.uploaded {
+        border-color: var(--success);
+        background: linear-gradient(
+          145deg,
+          white 0%,
+          var(--success-light) 100%
+        );
+      }
+
+      .upload-section.uploaded::before {
+        background: var(--success);
+        transform: scaleX(1);
+      }
+
+      .step-indicator {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--gray-200);
+        color: var(--gray-500);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.875rem;
+        margin-right: 0.75rem;
+        transition: var(--transition);
+      }
+
+      .upload-section.uploaded .step-indicator {
+        background: var(--success);
+        color: white;
+        box-shadow: var(--shadow);
+      }
+
+      /* Loading States */
+      .loading {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .loading::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        animation: loading 1.5s infinite;
+      }
+
+      @keyframes loading {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .two-column {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem 0.5rem;
+        }
+
+        .container {
+          padding: 2rem 1.5rem;
+        }
+
+        .upload-section {
+          padding: 1.5rem;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .btn-template {
+          margin-bottom: 1rem;
+        }
+      }
+
+      /* Enhanced Visual Elements */
+      .icon {
+        font-size: 1.25rem;
+      }
+
+      .upload-section .icon {
+        color: var(--gray-600);
+      }
+
+      .upload-section.uploaded .icon {
+        color: var(--success);
+      }
+
+      /* Tooltip */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 200px;
+        background-color: var(--gray-800);
+        color: white;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px;
+        font-size: 0.875rem;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -100px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      /* Enhanced animations */
+      .upload-section {
+        animation: fadeInUp 0.6s ease-out;
+        animation-fill-mode: both;
+      }
+
+      .upload-section:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .upload-section:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .upload-section:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .upload-section:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .upload-section:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-logo">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h1>Raport Generator</h1>
+        <p>Pesantren Rabbaanii Islamic School</p>
+        <div class="header-subtitle">
+          <i class="fas fa-file-pdf"></i>
+          Automated Report Generation System
+        </div>
+      </div>
+
+      <!-- Status Display -->
+      <div id="statusDisplay"></div>
+
+      <div class="upload-grid">
+        <!-- Upload Biodata -->
+        <div class="upload-section biodata-section" id="biodataSection">
+          <h3>
+            <span class="step-indicator">1</span>
+            <i class="fas fa-users icon"></i>
+            Upload Data Biodata Siswa
+          </h3>
+          <p>
+            Upload file Excel (.xlsx) yang berisi data biodata siswa untuk semua
+            kelas
+          </p>
+
+          <div class="form-group">
+            <a
+              href="/static/template_santri.xlsx"
+              class="btn btn-template"
+              download
+            >
+              <i class="fas fa-download"></i>
+              Download Template Biodata
+            </a>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+              <input
+                type="file"
+                id="biodataFile"
+                class="file-input"
+                accept=".xlsx,.xls"
+              />
+              <button
+                onclick="uploadBiodata()"
+                class="btn btn-primary"
+                id="biodataBtn"
+              >
+                <i class="fas fa-upload"></i>
+                Upload
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-column">
+          <!-- Upload Nilai -->
+          <div class="upload-section nilai-section" id="nilaiSection">
+            <h3>
+              <span class="step-indicator">2</span>
+              <i class="fas fa-chart-line icon"></i>
+              Upload Data Nilai Praktek & Najwa Tsuroya
+            </h3>
+            <p>
+              Upload file Excel (.xlsx) yang berisi data nilai siswa per kelas
+            </p>
+
+            <div class="form-group">
+              <select
+                id="kelasSelect"
+                class="class-select"
+                onchange="updateNilaiTemplate()"
+              >
+                <option value="">Pilih Kelas</option>
+                <option value="7A">7A</option>
+                <option value="7B">7B</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10A">10A</option>
+                <option value="10B">10B</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <a
+                id="nilaiTemplateLink"
+                href="#"
+                class="btn btn-template"
+                download
+                disabled
+              >
+                <i class="fas fa-download"></i>
+                Download Template Nilai
+              </a>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                <input
+                  type="file"
+                  id="nilaiFile"
+                  class="file-input"
+                  accept=".xlsx,.xls"
+                />
+                <button
+                  onclick="uploadNilai()"
+                  class="btn btn-primary"
+                  id="nilaiBtn"
+                >
+                  <i class="fas fa-upload"></i>
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload Kompetensi -->
+          <div class="upload-section kompetensi-section" id="kompetensiSection">
+            <h3>
+              <span class="step-indicator">3</span>
+              <i class="fas fa-laptop-code icon"></i>
+              Upload Data Kompetensi IT
+            </h3>
+            <div class="class-filter">
+              <i class="fas fa-info-circle"></i>
+              <strong>Khusus untuk kelas SMA (10A, 10B, 11, 12)</strong>
+            </div>
+            <p>
+              Upload file Excel (.xlsx) yang berisi data kompetensi keahlian
+            </p>
+
+            <div class="form-group">
+              <select
+                id="kompetensiKelasSelect"
+                class="class-select"
+                onchange="updateKompetensiTemplate()"
+              >
+                <option value="">Pilih Kelas SMA</option>
+                <option value="10A">10A</option>
+                <option value="10B">10B</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <a
+                id="kompetensiTemplateLink"
+                href="#"
+                class="btn btn-template"
+                download
+                disabled
+              >
+                <i class="fas fa-download"></i>
+                Download Template Kompetensi
+              </a>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                <input
+                  type="file"
+                  id="kompetensiFile"
+                  class="file-input"
+                  accept=".xlsx,.xls"
+                />
+                <button
+                  onclick="uploadKompetensi()"
+                  class="btn btn-primary"
+                  id="kompetensiBtn"
+                >
+                  <i class="fas fa-upload"></i>
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-column">
+          <!-- Upload Tahsin Tahfidz -->
+          <div class="upload-section tahsin-section" id="tahsinTahfidzSection">
+            <h3>
+              <span class="step-indicator">4</span>
+              <i class="fas fa-quran icon"></i>
+              Upload Data Tahsin & Tahfidz
+            </h3>
+            <div class="class-filter smp-filter">
+              <i class="fas fa-check-circle"></i>
+              <strong>Untuk semua kelas SMP dan SMA</strong>
+            </div>
+            <p>
+              Upload file Excel (.xlsx) yang berisi data nilai Tahsin dan
+              Tahfidz siswa
+            </p>
+
+            <div class="form-group">
+              <select
+                id="tahsinTahfidzKelasSelect"
+                class="class-select"
+                onchange="updateTahsinTahfidzTemplate()"
+              >
+                <option value="">Pilih Kelas</option>
+                <option value="7A">7A</option>
+                <option value="7B">7B</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10A">10A</option>
+                <option value="10B">10B</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <a
+                id="tahsinTahfidzTemplateLink"
+                href="#"
+                class="btn btn-template"
+                download
+                disabled
+              >
+                <i class="fas fa-download"></i>
+                Download Template Tahsin Tahfidz
+              </a>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                <input
+                  type="file"
+                  id="tahsinTahfidzFile"
+                  class="file-input"
+                  accept=".xlsx,.xls"
+                />
+                <button
+                  onclick="uploadTahsinTahfidz()"
+                  class="btn btn-primary"
+                  id="tahsinTahfidzBtn"
+                >
+                  <i class="fas fa-upload"></i>
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload Data Karakter -->
+          <div class="upload-section karakter-section" id="karakterSection">
+            <h3>
+              <span class="step-indicator">5</span>
+              <i class="fas fa-heart icon"></i>
+              Upload Data Karakter
+            </h3>
+            <div class="class-filter karakter-filter">
+              <i class="fas fa-star"></i>
+              <strong>Untuk semua kelas SMP dan SMA</strong>
+            </div>
+            <p>
+              Upload file Excel (.xlsx) yang berisi data penilaian karakter
+              siswa
+            </p>
+
+            <div class="form-group">
+              <select
+                id="karakterKelasSelect"
+                class="class-select"
+                onchange="updateKarakterTemplate()"
+              >
+                <option value="">Pilih Kelas</option>
+                <option value="7A">7A</option>
+                <option value="7B">7B</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10A">10A</option>
+                <option value="10B">10B</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <a
+                id="karakterTemplateLink"
+                href="#"
+                class="btn btn-template"
+                download
+                disabled
+              >
+                <i class="fas fa-download"></i>
+                Download Template Karakter
+              </a>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                <input
+                  type="file"
+                  id="karakterFile"
+                  class="file-input"
+                  accept=".xlsx,.xls"
+                />
+                <button
+                  onclick="uploadKarakter()"
+                  class="btn btn-primary"
+                  id="karakterBtn"
+                >
+                  <i class="fas fa-upload"></i>
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <!-- Generate Button -->
+      <button
+        onclick="generatePDF()"
+        class="btn generate-btn"
+        id="generateBtn"
+        disabled
+      >
+        <span>
+          <i class="fas fa-magic"></i>
+          Generate All Raport PDFs
+        </span>
+      </button>
+    </div>
+
+    <script>
+      let uploadStatus = {
+        biodata: false,
+        nilai: [],
+        kompetensi: [],
+        tahsinTahfidz: [],
+        karakter: [],
+      };
+
+      function showStatus(message, type = "info") {
+        const statusDiv = document.getElementById("statusDisplay");
+        const iconMap = {
+          success: "fas fa-check-circle",
+          error: "fas fa-exclamation-circle",
+          info: "fas fa-info-circle",
+        };
+        const icon = iconMap[type] || iconMap.info;
+        statusDiv.innerHTML = `<div class="status ${type}"><i class="${icon}"></i> ${message}</div>`;
+
+        if (type !== "success") {
+          setTimeout(() => {
+            statusDiv.innerHTML = "";
+          }, 5000);
+        }
+      }
+
+      function showProgress(show = false) {
+        const progressContainer = document.getElementById("progressContainer");
+        progressContainer.style.display = show ? "block" : "none";
+        if (!show) {
+          document.getElementById("progressBar").style.width = "0%";
+        }
+      }
+
+      function updateProgress(percent) {
+        document.getElementById("progressBar").style.width = percent + "%";
+      }
+
+      function markSectionAsUploaded(sectionId, uploaded = true) {
+        const section = document.getElementById(sectionId);
+        if (uploaded) {
+          section.classList.add("uploaded");
+        } else {
+          section.classList.remove("uploaded");
+        }
+      }
+
+      function setButtonLoading(buttonId, loading = true, originalText = "") {
+        const btn = document.getElementById(buttonId);
+        if (loading) {
+          btn.disabled = true;
+          btn.classList.add("loading");
+          btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        } else {
+          btn.disabled = false;
+          btn.classList.remove("loading");
+          btn.innerHTML = originalText;
+        }
+      }
+
+      // Fungsi update link template nilai
+      function updateNilaiTemplate() {
+        const kelas = document.getElementById("kelasSelect").value;
+        const link = document.getElementById("nilaiTemplateLink");
+
+        if (!kelas) {
+          link.href = "#";
+          link.setAttribute("disabled", true);
+          link.innerHTML =
+            '<i class="fas fa-download"></i> Download Template Nilai';
+          return;
+        }
+
+        const fileMap = {
+          "7A": "template_nilai_kompetensi_7A.xlsx",
+          "7B": "template_nilai_kompetensi_7B.xlsx",
+          8: "template_nilai_kompetensi_8.xlsx",
+          9: "template_nilai_kompetensi_9.xlsx",
+          "10A": "template_nilai_kompetensi_10A.xlsx",
+          "10B": "template_nilai_kompetensi_10B.xlsx",
+          11: "template_nilai_kompetensi_11.xlsx",
+          12: "template_nilai_kompetensi_12.xlsx",
+        };
+
+        link.href = "/static/" + fileMap[kelas];
+        link.removeAttribute("disabled");
+        link.innerHTML = `<i class="fas fa-download"></i> Download Template ${kelas}`;
+      }
+
+      // Fungsi update link template kompetensi
+      function updateKompetensiTemplate() {
+        const kelas = document.getElementById("kompetensiKelasSelect").value;
+        const link = document.getElementById("kompetensiTemplateLink");
+
+        if (!kelas) {
+          link.href = "#";
+          link.setAttribute("disabled", true);
+          link.innerHTML =
+            '<i class="fas fa-download"></i> Download Template Kompetensi';
+          return;
+        }
+
+        const fileMap = {
+          "10A": "template_nilai_kompetensi_keahlian_10A.xlsx",
+          "10B": "template_nilai_kompetensi_keahlian_10B.xlsx",
+          11: "template_nilai_kompetensi_keahlian_11.xlsx",
+          12: "template_nilai_kompetensi_keahlian_12.xlsx",
+        };
+
+        link.href = "/static/" + fileMap[kelas];
+        link.removeAttribute("disabled");
+        link.innerHTML = `<i class="fas fa-download"></i> Download Template ${kelas}`;
+      }
+
+      // Fungsi update link template tahsin tahfidz
+      function updateTahsinTahfidzTemplate() {
+        const kelas = document.getElementById("tahsinTahfidzKelasSelect").value;
+        const link = document.getElementById("tahsinTahfidzTemplateLink");
+
+        if (!kelas) {
+          link.href = "#";
+          link.setAttribute("disabled", true);
+          link.innerHTML =
+            '<i class="fas fa-download"></i> Download Template Tahsin Tahfidz';
+          return;
+        }
+
+        const fileMap = {
+          "7A": "tahsin_tahfidz_template_7A.xlsx",
+          "7B": "tahsin_tahfidz_template_7B.xlsx",
+          8: "tahsin_tahfidz_template_8.xlsx",
+          9: "tahsin_tahfidz_template_9.xlsx",
+          "10A": "tahsin_tahfidz_template_10A.xlsx",
+          "10B": "tahsin_tahfidz_template_10B.xlsx",
+          11: "tahsin_tahfidz_template_11.xlsx",
+          12: "tahsin_tahfidz_template_12.xlsx",
+        };
+
+        link.href = "/static/" + fileMap[kelas];
+        link.removeAttribute("disabled");
+        link.innerHTML = `<i class="fas fa-download"></i> Download Template ${kelas}`;
+      }
+
+      // Fungsi update link template karakter
+      function updateKarakterTemplate() {
+        const kelas = document.getElementById("karakterKelasSelect").value;
+        const link = document.getElementById("karakterTemplateLink");
+
+        if (!kelas) {
+          link.href = "#";
+          link.setAttribute("disabled", true);
+          link.innerHTML =
+            '<i class="fas fa-download"></i> Download Template Karakter';
+          return;
+        }
+
+        const fileMap = {
+          "7A": "karakter_template_7A.xlsx",
+          "7B": "karakter_template_7B.xlsx",
+          8: "karakter_template_8.xlsx",
+          9: "karakter_template_9.xlsx",
+          "10A": "karakter_template_10A.xlsx",
+          "10B": "karakter_template_10B.xlsx",
+          11: "karakter_template_11.xlsx",
+          12: "karakter_template_12.xlsx",
+        };
+
+        link.href = "/static/" + fileMap[kelas];
+        link.removeAttribute("disabled");
+        link.innerHTML = `<i class="fas fa-download"></i> Download Template ${kelas}`;
+      }
+
+      async function uploadBiodata() {
+        const fileInput = document.getElementById("biodataFile");
+
+        if (!fileInput.files[0]) {
+          showStatus("Silakan pilih file biodata terlebih dahulu!", "error");
+          return;
+        }
+
+        setButtonLoading("biodataBtn", true);
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        try {
+          const response = await fetch("/upload_biodata", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (result.status === "success") {
+            showStatus(result.message, "success");
+            uploadStatus.biodata = true;
+            markSectionAsUploaded("biodataSection", true);
+            updateGenerateButton();
+          } else {
+            showStatus(result.message, "error");
+          }
+        } catch (error) {
+          showStatus("Error uploading biodata: " + error.message, "error");
+        } finally {
+          setButtonLoading(
+            "biodataBtn",
+            false,
+            '<i class="fas fa-upload"></i> Upload'
+          );
+        }
+      }
+
+      async function uploadNilai() {
+        const fileInput = document.getElementById("nilaiFile");
+        const kelasSelect = document.getElementById("kelasSelect");
+
+        if (!fileInput.files[0]) {
+          showStatus("Silakan pilih file nilai terlebih dahulu!", "error");
+          return;
+        }
+
+        if (!kelasSelect.value) {
+          showStatus("Silakan pilih kelas terlebih dahulu!", "error");
+          return;
+        }
+
+        setButtonLoading("nilaiBtn", true);
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        formData.append("kelas", kelasSelect.value);
+
+        try {
+          const response = await fetch("/upload_nilai", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (result.status === "success") {
+            showStatus(result.message, "success");
+            if (!uploadStatus.nilai.includes(kelasSelect.value)) {
+              uploadStatus.nilai.push(kelasSelect.value);
+            }
+            markSectionAsUploaded(
+              "nilaiSection",
+              uploadStatus.nilai.length > 0
+            );
+            updateGenerateButton();
+
+            // Reset form
+            fileInput.value = "";
+            kelasSelect.value = "";
+            updateNilaiTemplate();
+          } else {
+            showStatus(result.message, "error");
+          }
+        } catch (error) {
+          showStatus("Error uploading nilai: " + error.message, "error");
+        } finally {
+          setButtonLoading(
+            "nilaiBtn",
+            false,
+            '<i class="fas fa-upload"></i> Upload'
+          );
+        }
+      }
+
+      async function uploadKompetensi() {
+        const fileInput = document.getElementById("kompetensiFile");
+        const kelasSelect = document.getElementById("kompetensiKelasSelect");
+
+        if (!fileInput.files[0]) {
+          showStatus("Silakan pilih file kompetensi terlebih dahulu!", "error");
+          return;
+        }
+
+        if (!kelasSelect.value) {
+          showStatus("Silakan pilih kelas SMA terlebih dahulu!", "error");
+          return;
+        }
+
+        setButtonLoading("kompetensiBtn", true);
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        formData.append("kelas", kelasSelect.value);
+
+        try {
+          const response = await fetch("/upload_kompetensi", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (result.status === "success") {
+            showStatus(result.message, "success");
+            if (!uploadStatus.kompetensi.includes(kelasSelect.value)) {
+              uploadStatus.kompetensi.push(kelasSelect.value);
+            }
+            markSectionAsUploaded(
+              "kompetensiSection",
+              uploadStatus.kompetensi.length > 0
+            );
+            updateGenerateButton();
+
+            // Reset form
+            fileInput.value = "";
+            kelasSelect.value = "";
+            updateKompetensiTemplate();
+          } else {
+            showStatus(result.message, "error");
+          }
+        } catch (error) {
+          showStatus("Error uploading kompetensi: " + error.message, "error");
+        } finally {
+          setButtonLoading(
+            "kompetensiBtn",
+            false,
+            '<i class="fas fa-upload"></i> Upload'
+          );
+        }
+      }
+
+      async function uploadTahsinTahfidz() {
+        const fileInput = document.getElementById("tahsinTahfidzFile");
+        const kelasSelect = document.getElementById("tahsinTahfidzKelasSelect");
+
+        if (!fileInput.files[0]) {
+          showStatus(
+            "Silakan pilih file Tahsin Tahfidz terlebih dahulu!",
+            "error"
+          );
+          return;
+        }
+
+        if (!kelasSelect.value) {
+          showStatus("Silakan pilih kelas terlebih dahulu!", "error");
+          return;
+        }
+
+        setButtonLoading("tahsinTahfidzBtn", true);
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        formData.append("kelas", kelasSelect.value);
+
+        try {
+          const response = await fetch("/upload_tahsin_tahfidz", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (result.status === "success") {
+            showStatus(result.message, "success");
+            if (!uploadStatus.tahsinTahfidz.includes(kelasSelect.value)) {
+              uploadStatus.tahsinTahfidz.push(kelasSelect.value);
+            }
+            markSectionAsUploaded(
+              "tahsinTahfidzSection",
+              uploadStatus.tahsinTahfidz.length > 0
+            );
+            updateGenerateButton();
+
+            // Reset form
+            fileInput.value = "";
+            kelasSelect.value = "";
+            updateTahsinTahfidzTemplate();
+          } else {
+            showStatus(result.message, "error");
+          }
+        } catch (error) {
+          showStatus(
+            "Error uploading Tahsin Tahfidz: " + error.message,
+            "error"
+          );
+        } finally {
+          setButtonLoading(
+            "tahsinTahfidzBtn",
+            false,
+            '<i class="fas fa-upload"></i> Upload'
+          );
+        }
+      }
+
+      async function uploadKarakter() {
+        const fileInput = document.getElementById("karakterFile");
+        const kelasSelect = document.getElementById("karakterKelasSelect");
+
+        if (!fileInput.files[0]) {
+          showStatus("Silakan pilih file karakter terlebih dahulu!", "error");
+          return;
+        }
+
+        if (!kelasSelect.value) {
+          showStatus("Silakan pilih kelas terlebih dahulu!", "error");
+          return;
+        }
+
+        setButtonLoading("karakterBtn", true);
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        formData.append("kelas", kelasSelect.value);
+
+        try {
+          const response = await fetch("/upload_karakter", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (result.status === "success") {
+            showStatus(result.message, "success");
+            if (!uploadStatus.karakter.includes(kelasSelect.value)) {
+              uploadStatus.karakter.push(kelasSelect.value);
+            }
+            markSectionAsUploaded(
+              "karakterSection",
+              uploadStatus.karakter.length > 0
+            );
+            updateGenerateButton();
+
+            // Reset form
+            fileInput.value = "";
+            kelasSelect.value = "";
+            updateKarakterTemplate();
+          } else {
+            showStatus(result.message, "error");
+          }
+        } catch (error) {
+          showStatus("Error uploading karakter: " + error.message, "error");
+        } finally {
+          setButtonLoading(
+            "karakterBtn",
+            false,
+            '<i class="fas fa-upload"></i> Upload'
+          );
+        }
+      }
+
+      function updateGenerateButton() {
+        const generateBtn = document.getElementById("generateBtn");
+        const canGenerate =
+          uploadStatus.biodata && uploadStatus.nilai.length > 0;
+
+        generateBtn.disabled = !canGenerate;
+
+        if (canGenerate) {
+          let statusText = `Ready to generate! Biodata: ✅, `;
+          statusText += `Nilai classes: ${uploadStatus.nilai.join(", ")}`;
+          if (uploadStatus.kompetensi.length > 0) {
+            statusText += `, Kompetensi classes: ${uploadStatus.kompetensi.join(
+              ", "
+            )}`;
+          }
+          if (uploadStatus.tahsinTahfidz.length > 0) {
+            statusText += `, Tahsin Tahfidz classes: ${uploadStatus.tahsinTahfidz.join(
+              ", "
+            )}`;
+          }
+          if (uploadStatus.karakter.length > 0) {
+            statusText += `, Karakter classes: ${uploadStatus.karakter.join(
+              ", "
+            )}`;
+          }
+          showStatus(statusText, "success");
+        }
+      }
+
+      // Tambahkan fungsi reset
+      function resetGenerator() {
+        uploadStatus = {
+          biodata: false,
+          nilai: [],
+          kompetensi: [],
+          tahsinTahfidz: [],
+          karakter: [],
+        };
+
+        // Reset tampilan section
+        markSectionAsUploaded("biodataSection", false);
+        markSectionAsUploaded("nilaiSection", false);
+        markSectionAsUploaded("kompetensiSection", false);
+        markSectionAsUploaded("tahsinTahfidzSection", false);
+        markSectionAsUploaded("karakterSection", false);
+
+        // Reset input file
+        document.getElementById("biodataFile").value = "";
+        document.getElementById("nilaiFile").value = "";
+        document.getElementById("kompetensiFile").value = "";
+        document.getElementById("tahsinTahfidzFile").value = "";
+        document.getElementById("karakterFile").value = "";
+
+        // Reset select
+        document.getElementById("kelasSelect").value = "";
+        document.getElementById("kompetensiKelasSelect").value = "";
+        document.getElementById("tahsinTahfidzKelasSelect").value = "";
+        document.getElementById("karakterKelasSelect").value = "";
+        updateNilaiTemplate();
+        updateKompetensiTemplate();
+        updateTahsinTahfidzTemplate();
+        updateKarakterTemplate();
+
+        // Nonaktifkan tombol generate
+        document.getElementById("generateBtn").disabled = true;
+
+        showStatus("Sistem siap untuk generate rapor baru", "info");
+      }
+
+      async function generatePDF() {
+        const btn = document.getElementById("generateBtn");
+        btn.disabled = true;
+        btn.innerHTML =
+          '<span><i class="fas fa-spinner fa-spin"></i> Generating PDFs...</span>';
+
+        showProgress(true);
+        updateProgress(10);
+
+        try {
+          updateProgress(30);
+
+          const response = await fetch("/generate_pdf", {
+            method: "POST",
+          });
+
+          updateProgress(60);
+
+          if (response.ok) {
+            updateProgress(90);
+
+            // Get the filename from the response headers
+            const contentDisposition = response.headers.get(
+              "content-disposition"
+            );
+            let filename = "raport_siswa.zip";
+            if (contentDisposition) {
+              const filenameMatch = contentDisposition.match(/filename=(.+)/);
+              if (filenameMatch) {
+                filename = filenameMatch[1].replace(/"/g, "");
+              }
+            }
+
+            // Download the file
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+            updateProgress(100);
+            showStatus("PDF berhasil diunduh!", "success");
+
+            setTimeout(() => resetGenerator(), 2000);
+          } else {
+            const error = await response.json();
+            showStatus("Error: " + error.message, "error");
+          }
+        } catch (error) {
+          showStatus("Error generating PDF: " + error.message, "error");
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML =
+            '<span><i class="fas fa-magic"></i> Generate All Raport PDFs</span>';
+          setTimeout(() => showProgress(false), 2000);
+        }
+      }
+
+      // Check status on page load
+      async function checkStatus() {
+        try {
+          const response = await fetch("/status");
+          const status = await response.json();
+
+          uploadStatus.biodata = status.biodata_uploaded;
+          uploadStatus.nilai = status.nilai_classes || [];
+          uploadStatus.kompetensi = status.kompetensi_classes || [];
+          uploadStatus.tahsinTahfidz = status.tahsin_tahfidz_classes || [];
+          uploadStatus.karakter = status.karakter_classes || [];
+
+          markSectionAsUploaded("biodataSection", uploadStatus.biodata);
+          markSectionAsUploaded("nilaiSection", uploadStatus.nilai.length > 0);
+          markSectionAsUploaded(
+            "kompetensiSection",
+            uploadStatus.kompetensi.length > 0
+          );
+          markSectionAsUploaded(
+            "tahsinTahfidzSection",
+            uploadStatus.tahsinTahfidz.length > 0
+          );
+          markSectionAsUploaded(
+            "karakterSection",
+            uploadStatus.karakter.length > 0
+          );
+
+          updateGenerateButton();
+
+          if (status.biodata_uploaded) {
+            showStatus(
+              `Biodata loaded: ${status.biodata_count} students`,
+              "info"
+            );
+          }
+        } catch (error) {
+          console.error("Error checking status:", error);
+        }
+      }
+
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        checkStatus();
+      });
+    </script>
+  </body>
+</html>
