@@ -33,7 +33,7 @@ os.makedirs(STATIC_FOLDER, exist_ok=True)
 logo_x = "logo.png"  # Placeholder for logo path
 logo_y = "logo2.png"  # Placeholder for logo path
 pdfmetrics.registerFont(TTFont("Calligrapher", os.path.join("static", "font.TTF")))
-pdfmetrics.registerFont(TTFont("NotoNaskhArabic", os.path.join("static", "NotoNaskhArabic.TTF")))
+pdfmetrics.registerFont(TTFont("NotoNaskhArabic", os.path.join("static", "NotoNaskhArabic.ttf")))
 
 # Global storage for uploaded data
 biodata_storage = None
@@ -613,7 +613,7 @@ def create_data_page(c, width, height, row, school_level):
     except Exception as e:
         print(f"Error creating data page: {e}")
 
-# page 3 praktek
+# page 3 nilai
 def create_score_page(c, width, height, row, nilai_df, wali_kelas_map, school_level):
     """Page 3: Scores with header logos and transparent background logo"""
     try:
@@ -807,11 +807,9 @@ def create_score_page(c, width, height, row, nilai_df, wali_kelas_map, school_le
         print("KOLOM:", list(nilai_df.columns))
         print(nilai_df.head())
         if not nilai_df.empty:
-            print(nilai_df.head())  
             for i, (_, nilai_row) in enumerate(nilai_df.iterrows(), start=1):
                 mapel = str(nilai_row.get("MataPelajaran", ""))
                 arab = str(nilai_row.get("Arab", ""))
-                print("MAPEL:", mapel, "| ARAB:", arab)
                 kkm = str(nilai_row.get("KKM", ""))
                 nilai = nilai_row.get("Nilai", 0)
                 try:
@@ -820,14 +818,29 @@ def create_score_page(c, width, height, row, nilai_df, wali_kelas_map, school_le
                     nilai_int = 0
                 huruf = number_to_words(nilai_int)
 
-                # Tentukan tinggi baris berdasarkan panjang teks huruf
-                lines_huruf = wrap_text_lines(
-                    c, huruf, col_huruf_width - 10, font="Times-Roman", size=12
-                )
-                row_height = max(base_row_height, 12 * len(lines_huruf) + 10)
+                # Process Arabic text
+                reshaped_arab = arabic_reshaper.reshape(arab)
+                bidi_arab = get_display(reshaped_arab)
+
+                # Calculate widths
+                c.setFont("NotoNaskhArabic", 12)
+                arab_width = c.stringWidth(bidi_arab, "NotoNaskhArabic", 12)
+                
+                # Max width for Indo text (total - arab - padding)
+                mapel_max_width = col_mapel_width - arab_width - 15
+
+                # Calculate lines for wrapping
+                lines_mapel = wrap_text_lines(c, mapel, mapel_max_width, font="Times-Roman", size=11)
+                lines_huruf = wrap_text_lines(c, huruf, col_huruf_width - 10, font="Times-Roman", size=12)
+
+                # Determine row height
+                height_mapel = len(lines_mapel) * 14
+                height_huruf = len(lines_huruf) * 14
+                row_height = max(base_row_height, height_mapel + 10, height_huruf + 10)
 
                 current_y -= row_height
-                # Kotak baris
+                
+                # Draw Rectangles
                 c.rect(table_x, current_y, col_no_width, row_height)
                 c.rect(table_x + col_no_width, current_y, col_mapel_width, row_height)
                 c.rect(
@@ -853,26 +866,20 @@ def create_score_page(c, width, height, row, nilai_df, wali_kelas_map, school_le
                     row_height,
                 )
 
-                # Kolom MATA PELAJARAN (Indo kiri – Arab kanan)
-                mapel_left_x = table_x + col_no_width + padding
-                mapel_right_x = table_x + col_no_width + col_mapel_width - padding - c.stringWidth(arab, "NotoNaskhArabic", 12)
-                text_y = current_y + row_height - 18
+                # Draw NO
+                draw_centered_text(c, str(i), table_x, current_y, col_no_width, row_height)
 
-                # Indonesia kiri
-                c.drawString(
-                    mapel_left_x,
-                    text_y,
-                    mapel
-                )
+                # Draw MATA PELAJARAN (Indo kiri – Arab kanan)
+                text_top_y = current_y + row_height - 15
+                
+                # Indo (Wrapped)
+                draw_wrapped_text(c, mapel, table_x + col_no_width + 5, text_top_y, mapel_max_width, line_height=14, font="Times-Roman", size=11)
 
-                # Arab kanan
-                c.drawRightString(
-                    table_x + col_no_width + col_mapel_width - padding,
-                   
-                    text_y,
-                    arab,
-                )
+                # Arab (Right aligned)
+                c.setFont("NotoNaskhArabic", 12)
+                c.drawRightString(table_x + col_no_width + col_mapel_width - 5, text_top_y, bidi_arab)
 
+                # Draw KKM & Nilai
                 draw_centered_text(
                     c,
                     kkm,
@@ -890,20 +897,17 @@ def create_score_page(c, width, height, row, nilai_df, wali_kelas_map, school_le
                     row_height,
                 )
 
-                # Huruf wrap
-                text_y = current_y + row_height - 15
-                for line in lines_huruf:
-                    c.drawString(
-                        table_x
-                        + col_no_width
-                        + col_mapel_width
-                        + col_kkm_width
-                        + col_nilai_width
-                        + padding,
-                        text_y,
-                        line,
-                    )
-                    text_y -= 12
+                # Draw Huruf (Wrapped)
+                draw_wrapped_text(
+                    c,
+                    huruf,
+                    table_x + col_no_width + col_mapel_width + col_kkm_width + col_nilai_width + 5,
+                    text_top_y,
+                    col_huruf_width - 10,
+                    line_height=14,
+                    font="Times-Roman",
+                    size=12
+                )
 
                 total += nilai_int
                 count += 1
