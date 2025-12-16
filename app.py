@@ -55,15 +55,15 @@ wali_kelas_map = {
 }
 
 nip_map = {
-    "kepsek": "09025234",
-    "7A": "09025248",
-    "7B": "09025249",
-    "8": "09025250",
-    "9": "08023170",
-    "10A": "09025251",
-    "10B": "09025255",
-    "11": "09025252",
-    "12": "09025253",
+    "kepsek": "-",
+    "7A": "-",
+    "7B": "-",
+    "8": "-",
+    "9": "-",
+    "10A": "-",
+    "10B": "-",
+    "11": "-",
+    "12": "-",
 }
 
 
@@ -228,7 +228,7 @@ def draw_signatures(c, width, height, left_margin, row, wali_kelas_map, nip_map)
     c.drawCentredString(col_x[0], signature_y - 60, "Wildan Arif Priambodo, Lc.")
     c.setFont("Times-Roman", 10)
     c.drawCentredString(
-        col_x[0], signature_y - 75, f"NIP. {nip_map.get('kepsek', '-')}"
+        col_x[0], signature_y - 75, f". {nip_map.get('kepsek', '-')}"
     )
 
     # === Wali Kelas ===
@@ -257,7 +257,7 @@ def draw_signatures(c, width, height, left_margin, row, wali_kelas_map, nip_map)
     c.setFont("Times-Bold", 11)
     c.drawCentredString(col_x[1], signature_y - 60, str(wali_kelas))
     c.setFont("Times-Roman", 10)
-    c.drawCentredString(col_x[1], signature_y - 75, f"NIP. {nip_wali}")
+    c.drawCentredString(col_x[1], signature_y - 75, f". {nip_wali}")
 
 
 def create_cover_page(c, width, height, nis, nisn, nama, logo_path, school_level):
@@ -608,7 +608,7 @@ def create_data_page(c, width, height, row, school_level):
 
         # NIP
         c.setFont("Times-Roman", 10)
-        c.drawString(signature_x + 30, signature_y - 80, "NIP. 09025234")
+        c.drawString(signature_x + 30, signature_y - 80, "-")
 
     except Exception as e:
         print(f"Error creating data page: {e}")
