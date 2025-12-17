@@ -207,21 +207,21 @@ def draw_signatures(c, width, height, left_margin, row, wali_kelas_map, nip_map)
     c.drawCentredString(col_x[0], signature_y, "Kepala Sekolah")
 
     # TTD Kepala Sekolah
-    ttd_kepsek_path = os.path.join("static", "ttd_kepsek.png")
-    if os.path.exists(ttd_kepsek_path):
-        try:
-            ttd_width, ttd_height = 120, 60
-            c.drawImage(
-                ttd_kepsek_path,
-                col_x[0] - (ttd_width / 2),
-                signature_y - 50,
-                width=ttd_width,
-                height=ttd_height,
-                mask="auto",
-                preserveAspectRatio=True,
-            )
-        except Exception as e:
-            print(f"Error loading kepsek signature: {e}")
+    # ttd_kepsek_path = os.path.join("static", "ttd_kepsek.png")
+    # if os.path.exists(ttd_kepsek_path):
+    #     try:
+    #         ttd_width, ttd_height = 120, 60
+    #         c.drawImage(
+    #             ttd_kepsek_path,
+    #             col_x[0] - (ttd_width / 2),
+    #             signature_y - 50,
+    #             width=ttd_width,
+    #             height=ttd_height,
+    #             mask="auto",
+    #             preserveAspectRatio=True,
+    #         )
+    #     except Exception as e:
+    #         print(f"Error loading kepsek signature: {e}")
 
     # Garis + nama + NIP Kepala Sekolah
     c.line(col_x[0] - 70, signature_y - 45, col_x[0] + 70, signature_y - 45)
@@ -236,22 +236,22 @@ def draw_signatures(c, width, height, left_margin, row, wali_kelas_map, nip_map)
     c.setFont("Times-Roman", 11)
     c.drawCentredString(col_x[1], signature_y + 20, "Wali Kelas")
 
-    # TTD Wali Kelas
-    ttd_wali_path = os.path.join("static", f"ttd_wali_{kelas}.png")
-    if os.path.exists(ttd_wali_path):
-        try:
-            ttd_width, ttd_height = 120, 60
-            c.drawImage(
-                ttd_wali_path,
-                col_x[1] - (ttd_width / 2),
-                signature_y - 45,
-                width=ttd_width,
-                height=ttd_height,
-                mask="auto",
-                preserveAspectRatio=True,
-            )
-        except Exception as e:
-            print(f"Error loading wali signature: {e}")
+    # # TTD Wali Kelas
+    # ttd_wali_path = os.path.join("static", f"ttd_wali_{kelas}.png")
+    # if os.path.exists(ttd_wali_path):
+    #     try:
+    #         ttd_width, ttd_height = 120, 60
+    #         c.drawImage(
+    #             ttd_wali_path,
+    #             col_x[1] - (ttd_width / 2),
+    #             signature_y - 45,
+    #             width=ttd_width,
+    #             height=ttd_height,
+    #             mask="auto",
+    #             preserveAspectRatio=True,
+    #         )
+    #     except Exception as e:
+    #         print(f"Error loading wali signature: {e}")
 
     # Garis + nama + NIP Wali Kelas
     c.line(col_x[1] - 70, signature_y - 45, col_x[1] + 70, signature_y - 45)
@@ -583,22 +583,22 @@ def create_data_page(c, width, height, row, school_level):
         c.drawString(signature_x + prefix_width + middle_width, signature_y + 5, suffix)
 
         # === Spasi untuk tanda tangan ===
-        ttd_path = os.path.join(STATIC_FOLDER, "ttd_kepsek.png")
-        if os.path.exists(ttd_path):
-            try:
-                ttd_width = 120
-                ttd_height = 60
-                c.drawImage(
-                    ttd_path,
-                    signature_x + 30,
-                    signature_y - 60,  # posisinya di atas garis
-                    width=ttd_width,
-                    height=ttd_height,
-                    mask="auto",
-                    preserveAspectRatio=True,
-                )
-            except Exception as e:
-                print(f"Error loading signature image: {e}")
+        # ttd_path = os.path.join(STATIC_FOLDER, "ttd_kepsek.png")
+        # if os.path.exists(ttd_path):
+        #     try:
+        #         ttd_width = 120
+        #         ttd_height = 60
+        #         c.drawImage(
+        #             ttd_path,
+        #             signature_x + 30,
+        #             signature_y - 60,  # posisinya di atas garis
+        #             width=ttd_width,
+        #             height=ttd_height,
+        #             mask="auto",
+        #             preserveAspectRatio=True,
+        #         )
+        #     except Exception as e:
+        #         print(f"Error loading signature image: {e}")
 
         # Garis tanda tangan
         c.line(signature_x, signature_y - 50, signature_x + 180, signature_y - 50)
